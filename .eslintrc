@@ -1,5 +1,14 @@
 {
   "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion":2017,
+    "ecmaFeatures": {
+      // Enabled object spread
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
   "env": {
     "node":true,
     "es6": true

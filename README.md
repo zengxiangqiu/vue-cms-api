@@ -7,9 +7,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-node bin/www
+npm run start
 ```
 
-
-npm install eslint --save-dev 
 

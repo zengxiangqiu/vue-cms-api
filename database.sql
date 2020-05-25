@@ -69,7 +69,7 @@ CREATE TABLE EntryTag(
     REFERENCES Entry(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE EntryMenu(
+CREATE TABLE EntryMenu_TMP(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     m_key TEXT NOT NULL,
     m_type TEXT NOT NULL,
@@ -78,6 +78,22 @@ CREATE TABLE EntryMenu(
     orderNum INTEGER NOT NULL
 );
 
+CREATE TABLE EntryMenu(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    m_key TEXT NOT NULL,
+    m_type TEXT NOT NULL,
+    parentKey TEXT,
+    orderNum INTEGER NOT NULL
+);
+
+
+
+INSERT INTO EntryMenu(m_key,m_type,parentKey, orderNum) SELECT m_key,m_type, parentKey, orderNum FROM EntryMenu_TMP;
+
+drop table EntryMenu;
+
+alter table EntryMenu_TMP rename to EntryMenu;
+
 
 CREATE TABLE EntryTag(
     id INTEGER PRIMARY Key AUTOINCREMENT,
@@ -85,6 +101,20 @@ CREATE TABLE EntryTag(
     tagId INTEGER NOT NULL
 );
 
+DROP TABLE USER;
+
+CREATE TABLE User(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    password TEXT NOT NULL,
+    nickname TEXT NOT NULL,
+    createdAt DATE TIMESTAMP DEFAULT CURRENT_DATE,
+    updatedAt DATE TIMESTAMP DEFAULT CURRENT_DATE
+);
+
+INSERT INTO User(name, password,nickname) VALUES('test', '1234','测试账户');
+INSERT INTO User(name, password,nickname) VALUES('tom', '1234','汤姆');
+INSERT INTO User(name, password,nickname) VALUES('admin', '1234','管理员');
 
 SELECT * FROM Entry  A 
 INNER JOIN EntryCategoryMaster B ON A.category = B.key --AND B.value = ''
